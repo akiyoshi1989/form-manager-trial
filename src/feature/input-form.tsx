@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Modal, Paper, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
+import DetailInput from "./detail-input";
+import InputModal from "../component/input-modal";
 
 type InputFormProps = {
   onClick: () => void;
@@ -13,6 +15,10 @@ type Form = {
   createAt: string;
 };
 const InputForm: React.FC<InputFormProps> = ({ onClick, showModal }) => {
+  const [showSubModal, setShowSubModal] = useState(false);
+  const handleShowSubModal = () => {
+    setShowSubModal((prev) => !prev);
+  };
   const { register, handleSubmit } = useForm({
     defaultValues: {
       id: "",
@@ -23,30 +29,20 @@ const InputForm: React.FC<InputFormProps> = ({ onClick, showModal }) => {
   const onSubmit = (data: Form) => console.log(data);
 
   return (
-    <Modal
-      open={showModal}
-      sx={{
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-      }}
-    >
-      <Paper
-        sx={{
-          height: "100%",
-          textAlign: "center",
-        }}
-      >
-        <Typography>InputForm</Typography>
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <input {...register("id")}></input>
-          <input {...register("name")}></input>
-          <input {...register("createAt")}></input>
-          <Button type="submit">送信</Button>
-        </Box>
-        <Button onClick={onClick}>閉じる</Button>
-      </Paper>
-    </Modal>
+    <InputModal showModal={showModal}>
+      <Typography>InputForm</Typography>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <input {...register("id")}></input>
+        <input {...register("name")}></input>
+        <Button type="button" onClick={handleShowSubModal}>
+          Open
+        </Button>
+        <input {...register("createAt")}></input>
+        {showSubModal && <DetailInput onClick={handleShowSubModal} />}
+        <Button type="submit">送信</Button>
+      </Box>
+      <Button onClick={onClick}>閉じる</Button>
+    </InputModal>
   );
 };
 
