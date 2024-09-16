@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import InputModal from "../component/input-modal";
 import { FormValues } from "./Types";
@@ -22,15 +22,19 @@ const InputForm: React.FC<InputFormProps> = ({
     <InputModal showModal={showModal}>
       <Typography>InputForm</Typography>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("id")}></input>
-        <input {...register("name")}></input>
-        <Button type="button" onClick={onClickDetail}>
-          Open
-        </Button>
-        <input {...register("createAt")}></input>
-        <Button type="submit">送信</Button>
+        <TextField label="id" {...register("id")} />
+        <TextField label="name" {...register("name")} />
+        <Box>
+          <Button type="button" onClick={onClickDetail}>
+            Open Detail
+          </Button>
+        </Box>
+        <TextField label="createAt" {...register("createAt")} />
+        <Box>
+          <Button type="submit">送信</Button>
+          <Button onClick={onClick}>閉じる</Button>
+        </Box>
       </Box>
-      <Button onClick={onClick}>閉じる</Button>
     </InputModal>
   );
 };

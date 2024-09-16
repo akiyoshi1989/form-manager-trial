@@ -1,11 +1,14 @@
 import { useState } from "react";
 import InputForm from "./input-form";
 import DetailInput from "./detail-input";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues } from "./Types";
+import { FormValues, UserAttribute } from "./Types";
 
-const UserFormBase = () => {
+type UserFormBaseProps = {
+  userAttribute: UserAttribute;
+};
+const UserFormBase: React.FC<UserFormBaseProps> = ({ userAttribute }) => {
   const [showMainModal, setShowMainModal] = useState(false);
   const [showSubModal, setShowSubModal] = useState(false);
   const handleShowModal = () => {
@@ -25,7 +28,7 @@ const UserFormBase = () => {
 
   return (
     <FormProvider {...methods}>
-      <div>
+      <Box>
         <Typography component="h1" variant="h1">
           入力フォーム
         </Typography>
@@ -37,8 +40,13 @@ const UserFormBase = () => {
             onClickDetail={handleShowSubModal}
           />
         )}
-        {showSubModal && <DetailInput onClick={handleShowSubModal} />}
-      </div>
+        {showSubModal && (
+          <DetailInput
+            onClick={handleShowSubModal}
+            userAttribute={userAttribute}
+          />
+        )}
+      </Box>
     </FormProvider>
   );
 };

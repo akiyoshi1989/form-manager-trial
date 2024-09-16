@@ -4,3 +4,7 @@ export type FormValues = {
     createAt:  Date | undefined;
     startDate: Date | undefined;
   };
+
+export type UserAttribute = {
+  string: string[]
+}[]
